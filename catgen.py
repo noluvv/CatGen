@@ -1,3 +1,5 @@
+#!/usr/local/bin/python3.11
+
 import time
 import subprocess
 from subprocess import Popen,PIPE
